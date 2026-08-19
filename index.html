@@ -114,7 +114,6 @@
     <!-- Scripts -->
     <script>
         const drawingList = [
-            "assets/images/posts/17880326874513014.jpg",
             "assets/images/posts/17883025593252583.jpg",
             "assets/images/posts/17924984865228971.webp",
             "assets/images/posts/17940972962535734.webp",
@@ -160,6 +159,7 @@
             "assets/images/posts/202307/17978535716346021.webp",
             "assets/images/posts/202307/18014322625660031.webp",
             "assets/images/posts/202307/18256214737089869.webp",
+            "assets/images/posts/202308/17933116184722426.webp",
             "assets/images/posts/202308/17938662146708202.webp",
             "assets/images/posts/202308/17967466484386950.webp",
             "assets/images/posts/202308/18071018173399423.webp",
@@ -183,8 +183,8 @@
             "assets/images/posts/202407/18016566185379420.webp"
 ];
         const photoList = [
-            "assets/images/posts/17887721037521191.jpg",
-            "assets/images/posts/202308/17933116184722426.webp"
+            "assets/images/posts/17880326874513014.jpg",
+            "assets/images/posts/17887721037521191.jpg"
 ];
 
         let currentList = [];
@@ -205,8 +205,19 @@
         const nextBtn = document.getElementById('next-btn');
         const closeBtn = document.getElementById('close-btn');
 
+        // Shuffle array randomly
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
         // Render Gallery
         function renderGalleries() {
+            // Randomize drawing order on each visit/reload
+            shuffleArray(drawingList);
+
             drawingCount.innerText = `${drawingList.length} Çizim & Karalama`;
 
             // Drawings

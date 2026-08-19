@@ -9,11 +9,11 @@ index_html_path = os.path.join(base_dir, "index.html")
 valid_extensions = ('.png', '.jpg', '.jpeg', '.webp', '.gif')
 
 # EXACTLY the 2 real personal photos:
-# 1. 17887721037521191.jpg -> Ömer & Cat photo
-# 2. 202308/17933116184722426.webp -> Footprints photo
+# 1. 17880326874513014.jpg -> Ömer & Cat photo
+# 2. 17887721037521191.jpg -> Footprints photo
 known_photos = [
-    "assets/images/posts/17887721037521191.jpg",
-    "assets/images/posts/202308/17933116184722426.webp"
+    "assets/images/posts/17880326874513014.jpg",
+    "assets/images/posts/17887721037521191.jpg"
 ]
 
 drawings = []
