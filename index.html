@@ -30,7 +30,6 @@
             box-shadow: 0 10px 30px -10px rgba(225, 188, 131, 0.15);
         }
 
-        /* Lightbox Modal Animation */
         #lightbox {
             transition: opacity 0.3s ease, visibility 0.3s ease;
         }
@@ -50,53 +49,57 @@
 
     <!-- Header -->
     <header class="w-full max-w-6xl flex flex-col items-center mb-12 text-center">
-        <div class="w-16 h-16 rounded-full bg-gradient-to-br from-[#e1bc83] to-[#9079b6] flex items-center justify-center mb-6 shadow-md">
+        <div class="w-16 h-16 rounded-full bg-gradient-to-br from-[#e1bc83] to-[#9079b6] flex items-center justify-center mb-5 shadow-md">
             <span class="text-2xl font-serif text-[#111111] font-semibold tracking-tighter">ÖK</span>
         </div>
-        <h1 class="text-3xl md:text-5xl font-serif mb-4 text-[#e1bc83]">Çizimler & Fikirler</h1>
-        <p class="text-gray-400 max-w-2xl text-base md:text-lg font-light leading-relaxed">
-            Düşüncelerin kağıda döküldüğü, analitik ve sanatsal yaklaşımların kesiştiği çizimler ve görsel notlar.
+        <h1 class="text-3xl md:text-5xl font-serif mb-3 text-[#e1bc83]">Çizimler & Fikirler</h1>
+        <p class="text-gray-400 max-w-xl text-base md:text-lg font-light leading-relaxed">
+            Kavramlar, karalamalar ve görsel notlar.
         </p>
-        <div class="flex items-center gap-4 mt-6">
-            <a href="https://kulhanciomer.github.io/omerkulhanci/" class="text-xs md:text-sm text-[#9079b6] hover:text-[#e1bc83] transition-colors border-b border-transparent hover:border-[#e1bc83] pb-0.5">
-                <i class="fa-solid fa-arrow-left mr-1.5"></i> Ana Sayfaya Dön
-            </a>
-            <span class="text-gray-600">•</span>
-            <span id="item-count" class="text-xs md:text-sm text-gray-500">Yükleniyor...</span>
-        </div>
+        <span id="drawing-count" class="mt-4 text-xs md:text-sm text-gray-500 font-mono">Yükleniyor...</span>
     </header>
 
-    <!-- Gallery Grid -->
-    <main id="gallery-grid" class="w-full max-w-6xl grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-        <!-- Dynamic images inserted here -->
+    <!-- Main Drawings Gallery Grid -->
+    <main id="gallery-grid" class="w-full max-w-6xl grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 mb-16">
+        <!-- Dynamic drawing images inserted here -->
     </main>
+
+    <!-- Separate Photos Section (Bottom Collapsible) -->
+    <section class="w-full max-w-6xl border-t border-[#262626] pt-12 flex flex-col items-center">
+        <button id="toggle-photos-btn" class="px-6 py-3 bg-[#171717] hover:bg-[#222222] border border-[#262626] hover:border-[#e1bc83] text-[#e1bc83] text-sm font-medium rounded-full transition-all flex items-center gap-2 focus:outline-none shadow-md">
+            <i class="fa-regular fa-image"></i>
+            <span>Fotoğrafları Göster</span>
+            <i id="toggle-icon" class="fa-solid fa-chevron-down ml-1 text-xs"></i>
+        </button>
+
+        <div id="photos-container" class="hidden w-full mt-8">
+            <h2 class="text-center text-lg font-serif text-gray-300 mb-6">Fotoğraflar</h2>
+            <div id="photos-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+                <!-- Dynamic photos inserted here -->
+            </div>
+        </div>
+    </section>
 
     <!-- Lightbox Modal -->
     <div id="lightbox" class="hidden-lightbox fixed inset-0 z-50 bg-black/95 backdrop-blur-md flex flex-col items-center justify-between p-4 md:p-8">
-        <!-- Close Button -->
         <button id="close-btn" class="absolute top-6 right-6 text-gray-400 hover:text-white text-3xl z-50 p-2 transition-colors focus:outline-none">
             <i class="fa-solid fa-xmark"></i>
         </button>
 
-        <!-- Main Content Area -->
         <div class="flex-grow w-full max-w-5xl flex items-center justify-between relative my-auto">
-            <!-- Prev Button -->
             <button id="prev-btn" class="absolute left-2 md:left-4 z-40 text-gray-400 hover:text-[#e1bc83] text-2xl md:text-4xl p-3 bg-black/50 rounded-full backdrop-blur transition-all hover:scale-110 focus:outline-none">
                 <i class="fa-solid fa-chevron-left"></i>
             </button>
 
-            <!-- Image Wrapper -->
             <div class="w-full h-full flex items-center justify-center p-4">
                 <img id="lightbox-img" src="" alt="" class="max-h-[75vh] max-w-full object-contain rounded-lg shadow-2xl border border-white/10 transition-all duration-300">
             </div>
 
-            <!-- Next Button -->
             <button id="next-btn" class="absolute right-2 md:right-4 z-40 text-gray-400 hover:text-[#e1bc83] text-2xl md:text-4xl p-3 bg-black/50 rounded-full backdrop-blur transition-all hover:scale-110 focus:outline-none">
                 <i class="fa-solid fa-chevron-right"></i>
             </button>
         </div>
 
-        <!-- Counter / Caption Footer -->
         <div class="w-full max-w-xl text-center mt-4">
             <p id="lightbox-counter" class="text-xs text-[#e1bc83] font-mono mb-1"></p>
             <p id="lightbox-title" class="text-sm text-gray-300 font-light"></p>
@@ -108,22 +111,18 @@
         © 2026 Ömer Külhancı. Tüm hakları saklıdır.
     </footer>
 
-    <!-- Script to Load All Images & Handle Lightbox -->
+    <!-- Scripts -->
     <script>
-        const imageList = [
-            "assets/images/posts/17880326874513014.jpg",
+        const drawingList = [
             "assets/images/posts/17883025593252583.jpg",
-            "assets/images/posts/17887721037521191.jpg",
             "assets/images/posts/17924984865228971.webp",
             "assets/images/posts/17940972962535734.webp",
             "assets/images/posts/17949202688875400.webp",
             "assets/images/posts/17980491173737004.webp",
             "assets/images/posts/17990309705837418.webp",
             "assets/images/posts/17995627745498588.webp",
-            "assets/images/posts/18031708955704434.webp",
             "assets/images/posts/18049757909621746.webp",
             "assets/images/posts/18055854962233342.webp",
-            "assets/images/posts/18057252041355413.jpg",
             "assets/images/posts/18058634722418100.jpg",
             "assets/images/posts/18077992390492847.webp",
             "assets/images/posts/18089472524009845.jpg",
@@ -159,7 +158,6 @@
             "assets/images/posts/202307/17978535716346021.webp",
             "assets/images/posts/202307/18014322625660031.webp",
             "assets/images/posts/202307/18256214737089869.webp",
-            "assets/images/posts/202308/17933116184722426.webp",
             "assets/images/posts/202308/17938662146708202.webp",
             "assets/images/posts/202308/17967466484386950.webp",
             "assets/images/posts/202308/18071018173399423.webp",
@@ -182,11 +180,23 @@
             "assets/images/posts/202404/18046620064629262.webp",
             "assets/images/posts/202407/18016566185379420.webp"
 ];
+        const photoList = [
+            "assets/images/posts/17880326874513014.jpg",
+            "assets/images/posts/17887721037521191.jpg",
+            "assets/images/posts/18057252041355413.jpg",
+            "assets/images/posts/202308/17933116184722426.webp"
+];
 
+        let currentList = [];
         let currentIndex = 0;
 
         const galleryGrid = document.getElementById('gallery-grid');
-        const itemCount = document.getElementById('item-count');
+        const drawingCount = document.getElementById('drawing-count');
+        const togglePhotosBtn = document.getElementById('toggle-photos-btn');
+        const photosContainer = document.getElementById('photos-container');
+        const photosGrid = document.getElementById('photos-grid');
+        const toggleIcon = document.getElementById('toggle-icon');
+
         const lightbox = document.getElementById('lightbox');
         const lightboxImg = document.getElementById('lightbox-img');
         const lightboxCounter = document.getElementById('lightbox-counter');
@@ -195,29 +205,63 @@
         const nextBtn = document.getElementById('next-btn');
         const closeBtn = document.getElementById('close-btn');
 
-        // Populate Counter
-        itemCount.innerText = `${imageList.length} Çizim / Eser`;
+        // Render Gallery
+        function renderGalleries() {
+            drawingCount.innerText = `${drawingList.length} Çizim & Karalama`;
 
-        // Render Grid Items
-        imageList.forEach((path, index) => {
+            // Drawings
+            galleryGrid.innerHTML = '';
+            drawingList.forEach((path, index) => {
+                const card = createCard(path, () => openLightbox(drawingList, index, 'Çizim'));
+                galleryGrid.appendChild(card);
+            });
+
+            // Photos
+            photosGrid.innerHTML = '';
+            photoList.forEach((path, index) => {
+                const card = createCard(path, () => openLightbox(photoList, index, 'Fotoğraf'));
+                photosGrid.appendChild(card);
+            });
+
+            if (photoList.length === 0) {
+                togglePhotosBtn.style.display = 'none';
+            } else {
+                togglePhotosBtn.querySelector('span').innerText = `Kişisel Fotoğraflar (${photoList.length})`;
+            }
+        }
+
+        function createCard(path, onClick) {
             const card = document.createElement('div');
             card.className = 'gallery-card rounded-xl overflow-hidden cursor-pointer flex flex-col group';
-            card.onclick = () => openLightbox(index);
-
+            card.onclick = onClick;
             card.innerHTML = `
                 <div class="aspect-square w-full bg-[#161616] overflow-hidden relative">
-                    <img src="${path}" alt="Çizim ${index + 1}" loading="lazy" class="w-full h-full object-cover opacity-85 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                    <img src="${path}" alt="Görsel" loading="lazy" class="w-full h-full object-cover opacity-85 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
                     <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3">
                         <span class="text-xs text-[#e1bc83] font-serif"><i class="fa-solid fa-expand mr-1"></i> Büyüt</span>
                     </div>
                 </div>
             `;
-            galleryGrid.appendChild(card);
-        });
+            return card;
+        }
 
-        // Lightbox Functions
-        function openLightbox(index) {
+        // Toggle Photos
+        togglePhotosBtn.onclick = () => {
+            const isHidden = photosContainer.classList.contains('hidden');
+            if (isHidden) {
+                photosContainer.classList.remove('hidden');
+                toggleIcon.className = 'fa-solid fa-chevron-up ml-1 text-xs';
+            } else {
+                photosContainer.classList.add('hidden');
+                toggleIcon.className = 'fa-solid fa-chevron-down ml-1 text-xs';
+            }
+        };
+
+        // Lightbox Logic
+        function openLightbox(list, index, label) {
+            currentList = list;
             currentIndex = index;
+            currentLabel = label;
             updateLightbox();
             lightbox.classList.remove('hidden-lightbox');
             lightbox.classList.add('visible-lightbox');
@@ -231,39 +275,38 @@
         }
 
         function updateLightbox() {
-            lightboxImg.src = imageList[currentIndex];
-            lightboxCounter.innerText = `${currentIndex + 1} / ${imageList.length}`;
-            lightboxTitle.innerText = `Ömer Külhancı Çizim Arşivi #${currentIndex + 1}`;
+            lightboxImg.src = currentList[currentIndex];
+            lightboxCounter.innerText = `${currentIndex + 1} / ${currentList.length}`;
+            lightboxTitle.innerText = `Ömer Külhancı Arşivi (${currentLabel} #${currentIndex + 1})`;
         }
 
         function prevImage() {
-            currentIndex = (currentIndex - 1 + imageList.length) % imageList.length;
+            currentIndex = (currentIndex - 1 + currentList.length) % currentList.length;
             updateLightbox();
         }
 
         function nextImage() {
-            currentIndex = (currentIndex + 1) % imageList.length;
+            currentIndex = (currentIndex + 1) % currentList.length;
             updateLightbox();
         }
 
-        // Event Listeners
         prevBtn.onclick = (e) => { e.stopPropagation(); prevImage(); };
         nextBtn.onclick = (e) => { e.stopPropagation(); nextImage(); };
         closeBtn.onclick = closeLightbox;
 
         lightbox.onclick = (e) => {
-            if (e.target === lightbox || e.target.id === 'lightbox-img-container') {
-                closeLightbox();
-            }
+            if (e.target === lightbox) closeLightbox();
         };
 
-        // Keyboard Navigation
         document.addEventListener('keydown', (e) => {
             if (!lightbox.classList.contains('visible-lightbox')) return;
             if (e.key === 'Escape') closeLightbox();
             if (e.key === 'ArrowLeft') prevImage();
             if (e.key === 'ArrowRight') nextImage();
         });
+
+        // Initialize Galleries
+        renderGalleries();
     </script>
 </body>
 </html>
