@@ -22,83 +22,234 @@
         .gallery-card {
             background: #121212;
             border: 1px solid #262626;
-            transition: transform 0.3s ease, border-color 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .gallery-card:hover {
-            transform: translateY(-5px);
-            border-color: #4b5563;
+            transform: translateY(-4px);
+            border-color: #e1bc83;
+            box-shadow: 0 10px 30px -10px rgba(225, 188, 131, 0.15);
+        }
+
+        /* Lightbox Modal Animation */
+        #lightbox {
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        #lightbox.hidden-lightbox {
+            opacity: 0;
+            pointer-events: none;
+            visibility: hidden;
+        }
+        #lightbox.visible-lightbox {
+            opacity: 1;
+            pointer-events: auto;
+            visibility: visible;
         }
     </style>
 </head>
-<body class="min-h-screen py-16 px-6 sm:px-12 flex flex-col items-center">
+<body class="min-h-screen py-12 px-4 sm:px-8 flex flex-col items-center">
 
     <!-- Header -->
-    <header class="w-full max-w-5xl flex flex-col items-center mb-16 text-center">
-        <div class="w-16 h-16 rounded-full bg-gradient-to-br from-[#e1bc83] to-[#9079b6] flex items-center justify-center mb-6">
-            <span class="text-2xl font-serif text-[#111111] tracking-tighter">ÖK</span>
+    <header class="w-full max-w-6xl flex flex-col items-center mb-12 text-center">
+        <div class="w-16 h-16 rounded-full bg-gradient-to-br from-[#e1bc83] to-[#9079b6] flex items-center justify-center mb-6 shadow-md">
+            <span class="text-2xl font-serif text-[#111111] font-semibold tracking-tighter">ÖK</span>
         </div>
-        <h1 class="text-4xl md:text-5xl font-serif mb-4 text-[#e1bc83]">Çizimler & Fikirler</h1>
-        <p class="text-gray-400 max-w-2xl text-lg font-light leading-relaxed">
-            Düşüncelerin kağıda döküldüğü, analitik ve sanatsal yaklaşımların kesiştiği noktalar.
+        <h1 class="text-3xl md:text-5xl font-serif mb-4 text-[#e1bc83]">Çizimler & Fikirler</h1>
+        <p class="text-gray-400 max-w-2xl text-base md:text-lg font-light leading-relaxed">
+            Düşüncelerin kağıda döküldüğü, analitik ve sanatsal yaklaşımların kesiştiği çizimler ve görsel notlar.
         </p>
-        <a href="https://kulhanciomer.github.io/omerkulhanci/" class="mt-6 text-sm text-[#9079b6] hover:text-[#e1bc83] transition-colors border-b border-transparent hover:border-[#e1bc83] pb-1">
-            <i class="fa-solid fa-arrow-left mr-2"></i> Ana Sayfaya Dön (Linktree)
-        </a>
+        <div class="flex items-center gap-4 mt-6">
+            <a href="https://kulhanciomer.github.io/omerkulhanci/" class="text-xs md:text-sm text-[#9079b6] hover:text-[#e1bc83] transition-colors border-b border-transparent hover:border-[#e1bc83] pb-0.5">
+                <i class="fa-solid fa-arrow-left mr-1.5"></i> Ana Sayfaya Dön
+            </a>
+            <span class="text-gray-600">•</span>
+            <span id="item-count" class="text-xs md:text-sm text-gray-500">Yükleniyor...</span>
+        </div>
     </header>
 
     <!-- Gallery Grid -->
-    <main class="w-full max-w-5xl grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        
-        <!-- Item 1 -->
-        <article class="gallery-card rounded-xl overflow-hidden flex flex-col">
-            <div class="aspect-square w-full bg-[#1a1a1a] overflow-hidden">
-                <img src="assets/images/drawing1.png" alt="Kaos ve Döngü" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500 hover:scale-105">
-            </div>
-            <div class="p-6 flex-grow flex flex-col justify-between">
-                <div>
-                    <h3 class="text-xl font-serif text-white mb-2">Kaos ve Döngü</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed mb-4">
-                        Merkezdeki karmaşadan dışa doğru genişleyen boyut, kimlik, benlik ve gelecek kavramları üzerine karalamalar.
-                    </p>
-                </div>
-            </div>
-        </article>
-
-        <!-- Item 2 -->
-        <article class="gallery-card rounded-xl overflow-hidden flex flex-col">
-            <div class="aspect-square w-full bg-[#1a1a1a] overflow-hidden">
-                <img src="assets/images/drawing2.png" alt="Kimlik ve Özgünlük" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500 hover:scale-105">
-            </div>
-            <div class="p-6 flex-grow flex flex-col justify-between">
-                <div>
-                    <h3 class="text-xl font-serif text-white mb-2">Kimlik & Özgünlük Matrisi</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed mb-4">
-                        Taklit etmek (imitate) ile özgünlük (authenticity) ekseninde, kimlik inşasının (identity/emulate) eğrisel değişimi.
-                    </p>
-                </div>
-            </div>
-        </article>
-
-        <!-- Item 3 -->
-        <article class="gallery-card rounded-xl overflow-hidden flex flex-col md:col-span-2 lg:col-span-1">
-            <div class="aspect-square w-full bg-[#1a1a1a] overflow-hidden">
-                <img src="assets/images/drawing3.png" alt="Uyum ve İfade Dengesi" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-500 hover:scale-105">
-            </div>
-            <div class="p-6 flex-grow flex flex-col justify-between">
-                <div>
-                    <h3 class="text-xl font-serif text-white mb-2">Uyum ve İfade Dengesi</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed mb-4">
-                        Sisteme uyum (compliance) ile erişim (access), kullanılabilirlik (availability) ile kendini ifade etme (self-expression) arasındaki analitik ilişki.
-                    </p>
-                </div>
-            </div>
-        </article>
-
+    <main id="gallery-grid" class="w-full max-w-6xl grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+        <!-- Dynamic images inserted here -->
     </main>
 
-    <footer class="mt-20 border-t border-[#262626] pt-8 w-full max-w-5xl text-center text-gray-500 text-sm">
+    <!-- Lightbox Modal -->
+    <div id="lightbox" class="hidden-lightbox fixed inset-0 z-50 bg-black/95 backdrop-blur-md flex flex-col items-center justify-between p-4 md:p-8">
+        <!-- Close Button -->
+        <button id="close-btn" class="absolute top-6 right-6 text-gray-400 hover:text-white text-3xl z-50 p-2 transition-colors focus:outline-none">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+
+        <!-- Main Content Area -->
+        <div class="flex-grow w-full max-w-5xl flex items-center justify-between relative my-auto">
+            <!-- Prev Button -->
+            <button id="prev-btn" class="absolute left-2 md:left-4 z-40 text-gray-400 hover:text-[#e1bc83] text-2xl md:text-4xl p-3 bg-black/50 rounded-full backdrop-blur transition-all hover:scale-110 focus:outline-none">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+
+            <!-- Image Wrapper -->
+            <div class="w-full h-full flex items-center justify-center p-4">
+                <img id="lightbox-img" src="" alt="" class="max-h-[75vh] max-w-full object-contain rounded-lg shadow-2xl border border-white/10 transition-all duration-300">
+            </div>
+
+            <!-- Next Button -->
+            <button id="next-btn" class="absolute right-2 md:right-4 z-40 text-gray-400 hover:text-[#e1bc83] text-2xl md:text-4xl p-3 bg-black/50 rounded-full backdrop-blur transition-all hover:scale-110 focus:outline-none">
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
+        </div>
+
+        <!-- Counter / Caption Footer -->
+        <div class="w-full max-w-xl text-center mt-4">
+            <p id="lightbox-counter" class="text-xs text-[#e1bc83] font-mono mb-1"></p>
+            <p id="lightbox-title" class="text-sm text-gray-300 font-light"></p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="mt-20 border-t border-[#262626] pt-8 w-full max-w-6xl text-center text-gray-500 text-xs md:text-sm">
         © 2026 Ömer Külhancı. Tüm hakları saklıdır.
     </footer>
 
+    <!-- Script to Load All Images & Handle Lightbox -->
+    <script>
+        const imageList = [
+            "assets/images/drawing1.png",
+            "assets/images/drawing2.png",
+            "assets/images/drawing3.png",
+            "assets/images/posts/202305/347670878_932902404613362_7448967546990885499_n_17947387172627578.webp",
+            "assets/images/posts/202305/347860109_481513090798852_5911695944482473433_n_18006879538666324.webp",
+            "assets/images/posts/202305/348470592_224322043671090_9192743317645158372_n_17894978690803241.webp",
+            "assets/images/posts/202305/348500371_793620235694822_6784333544759474157_n_18031419346458659.webp",
+            "assets/images/posts/202305/348506753_271068985383947_8035747469668577706_n_17987679509041090.webp",
+            "assets/images/posts/202305/348849555_779914056943133_429477746903116282_n_18044603254413469.webp",
+            "assets/images/posts/202305/349554611_1673689066411540_4425473906763931080_n_17962039949525302.webp",
+            "assets/images/posts/202305/350145633_1491578831582957_4480021031952284812_n_17979844979274696.webp",
+            "assets/images/posts/202306/351013574_975526677199665_8632215507029174081_n_17913611324755436.webp",
+            "assets/images/posts/202306/351119078_227196710083652_3317156246163494175_n_18028532209523597.webp",
+            "assets/images/posts/202306/351172420_620105773174026_4319584014725127091_n_17989870949073597.webp",
+            "assets/images/posts/202306/351291104_1279951795949782_4633060172838420227_n_17940972962535734.webp",
+            "assets/images/posts/202306/351724086_205643419047982_6101812768938950672_n_18043642573457646.webp",
+            "assets/images/posts/202306/352594150_1232295884150345_7397149109484952249_n_18004445377677120.webp",
+            "assets/images/posts/202306/353938720_841989240601833_5854951711656522154_n_18375207790048735.webp",
+            "assets/images/posts/202306/354186932_801975441247489_501079765192850642_n_18056240239423714.webp",
+            "assets/images/posts/202306/354392042_808409667484699_6613487401507580263_n_18367781587002910.webp",
+            "assets/images/posts/202306/354426993_164067413323016_2045748716840369471_n_18213223210222850.jpg",
+            "assets/images/posts/202306/355107844_819417769355208_8488423260860292251_n_17854102367986330.jpg",
+            "assets/images/posts/202306/355196424_278557161248408_4607442284620747351_n_17979140333103814.jpg",
+            "assets/images/posts/202307/359040712_814050213680285_5642945918143613261_n_18014322625660031.webp",
+            "assets/images/posts/202307/359551569_1689859408144967_832003560694773881_n_17978535716346021.webp",
+            "assets/images/posts/202307/361580025_269249329137728_132194910836730879_n_18256214737089869.webp",
+            "assets/images/posts/202308/366487534_271032085639372_7170241609273317944_n_17967466484386950.webp",
+            "assets/images/posts/202308/366535829_3601760350140729_3812649620224882976_n_18071018173399423.webp",
+            "assets/images/posts/202308/367635604_3459019734351800_4024972388644448854_n_18071537119396471.webp",
+            "assets/images/posts/202308/368556279_820393186297247_3877700459868460137_n_17933116184722426.webp",
+            "assets/images/posts/202308/373247237_591301896302627_5537775137729816447_n_17938662146708202.webp",
+            "assets/images/posts/202309/375189114_275813208572546_4115195466370760963_n_17962847204629606.webp",
+            "assets/images/posts/202309/383311176_1306203700036391_505205714477192741_n_17900305847793159.webp",
+            "assets/images/posts/202309/383359559_340391755171533_1491713064142433108_n_18018524815753200.webp",
+            "assets/images/posts/202309/384053433_332008262718284_3612038387863889784_n_18015289621850661.webp",
+            "assets/images/posts/202310/385154576_3672775382991101_2778063276968847339_n_17886575900865607.webp",
+            "assets/images/posts/202310/390888269_167844596346228_4607828161022862401_n_17998777148187035.webp",
+            "assets/images/posts/202310/391214479_3676656659231459_5720952269313047614_n_17944412489615511.webp",
+            "assets/images/posts/202310/391274096_1523798378552919_3547391399081649929_n_17982337073311860.webp",
+            "assets/images/posts/202310/391488746_732660108907332_2315864741288587238_n_18052185049489653.webp",
+            "assets/images/posts/202312/412467334_351202174331851_3023476291579038845_n_17933980892692559.webp",
+            "assets/images/posts/202401/414736297_1487560791803166_4321687664575398582_n_17972992430645968.webp",
+            "assets/images/posts/202401/416041136_756938049802489_254666827471928769_n_17995420874432875.webp",
+            "assets/images/posts/202403/430635166_389530623781817_6609277659650448726_n_18011895785209398.webp",
+            "assets/images/posts/202403/432396841_940091761054963_8989298262947781894_n_17915046776905781.webp",
+            "assets/images/posts/202403/432466174_3246963052276378_3180218758991714295_n_18424010704040906.jpg",
+            "assets/images/posts/202404/435397816_3577601125883247_2274708882932212018_n_18046620064629262.webp",
+            "assets/images/posts/202404/437146267_7528539427191679_1179897658584945413_n_18023194550286167.webp",
+            "assets/images/posts/202407/449706573_816182946891540_8571762274671271355_n_18016566185379420.webp",
+            "assets/images/posts/202407/452763628_17944794671835257_7667622813352399863_n_17995627745498588.webp",
+            "assets/images/posts/202410/462282126_17954027441835257_1030128529072944558_n_18077992390492847.webp",
+            "assets/images/posts/202410/464213033_1907651406313072_688069066690305561_n_18136863670362033.webp",
+            "assets/images/posts/202503/486875326_17974318100835257_2340418759341664998_n_17883025593252583.jpg",
+            "assets/images/posts/202504/491112279_17976554339835257_625502021852746649_n_18267116224278813.webp",
+            "assets/images/posts/202504/491438156_17976859655835257_1690503975163706226_n_18385906786114910.webp",
+            "assets/images/posts/202505/495455940_17978529116835257_5388631315992144260_n_18109691737500462.webp"
+        ];
+
+        let currentIndex = 0;
+
+        const galleryGrid = document.getElementById('gallery-grid');
+        const itemCount = document.getElementById('item-count');
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxCounter = document.getElementById('lightbox-counter');
+        const lightboxTitle = document.getElementById('lightbox-title');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const closeBtn = document.getElementById('close-btn');
+
+        // Populate Counter
+        itemCount.innerText = `${imageList.length} Çizim / Eser`;
+
+        // Render Grid Items
+        imageList.forEach((path, index) => {
+            const card = document.createElement('div');
+            card.className = 'gallery-card rounded-xl overflow-hidden cursor-pointer flex flex-col group';
+            card.onclick = () => openLightbox(index);
+
+            card.innerHTML = `
+                <div class="aspect-square w-full bg-[#161616] overflow-hidden relative">
+                    <img src="${path}" alt="Çizim ${index + 1}" loading="lazy" class="w-full h-full object-cover opacity-85 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3">
+                        <span class="text-xs text-[#e1bc83] font-serif"><i class="fa-solid fa-expand mr-1"></i> Büyüt</span>
+                    </div>
+                </div>
+            `;
+            galleryGrid.appendChild(card);
+        });
+
+        // Lightbox Functions
+        function openLightbox(index) {
+            currentIndex = index;
+            updateLightbox();
+            lightbox.classList.remove('hidden-lightbox');
+            lightbox.classList.add('visible-lightbox');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            lightbox.classList.remove('visible-lightbox');
+            lightbox.classList.add('hidden-lightbox');
+            document.body.style.overflow = 'auto';
+        }
+
+        function updateLightbox() {
+            lightboxImg.src = imageList[currentIndex];
+            lightboxCounter.innerText = `${currentIndex + 1} / ${imageList.length}`;
+            lightboxTitle.innerText = `Ömer Külhancı Çizim Arşivi #${currentIndex + 1}`;
+        }
+
+        function prevImage() {
+            currentIndex = (currentIndex - 1 + imageList.length) % imageList.length;
+            updateLightbox();
+        }
+
+        function nextImage() {
+            currentIndex = (currentIndex + 1) % imageList.length;
+            updateLightbox();
+        }
+
+        // Event Listeners
+        prevBtn.onclick = (e) => { e.stopPropagation(); prevImage(); };
+        nextBtn.onclick = (e) => { e.stopPropagation(); nextImage(); };
+        closeBtn.onclick = closeLightbox;
+
+        lightbox.onclick = (e) => {
+            if (e.target === lightbox || e.target.id === 'lightbox-img-container') {
+                closeLightbox();
+            }
+        };
+
+        // Keyboard Navigation
+        document.addEventListener('keydown', (e) => {
+            if (!lightbox.classList.contains('visible-lightbox')) return;
+            if (e.key === 'Escape') closeLightbox();
+            if (e.key === 'ArrowLeft') prevImage();
+            if (e.key === 'ArrowRight') nextImage();
+        });
+    </script>
 </body>
 </html>
